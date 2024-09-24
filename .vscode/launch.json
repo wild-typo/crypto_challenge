@@ -1,0 +1,34 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "hex2base64",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/c/bin/crypto_challenge",
+            "args": ["hex2base64", "49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d"],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        }
+        {
+            "name": "fixedxor",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/c/bin/crypto_challenge",
+            "args": ["fixedxor", "1c0111001f010100061a024b53535009181c", "686974207468652062756c6c277320657965"],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        }
+
+    ]
+}
