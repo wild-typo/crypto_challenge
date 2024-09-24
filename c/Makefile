@@ -5,9 +5,9 @@ SRCS = $(wildcard src/*.c)
 OBJS = $(patsubst src/%.c, obj/%.o, $(SRCS))
 
 .PHONY: all
-all: bin/hex2base64
+all: bin/crypto_challenge
 
-bin/hex2base64: $(OBJS)
+bin/crypto_challenge: $(OBJS)
 	$(CC) -o $@ $^
 
 obj/%.o: src/%.c
@@ -15,5 +15,5 @@ obj/%.o: src/%.c
 
 .PHONY: clean
 clean:
-	rm $(OBJS) bin/hex2base64
+	rm $(OBJS) bin/crypto_challenge
 
