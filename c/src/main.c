@@ -1,6 +1,7 @@
 #include <string.h>
 #include "hex2base64.h"
 #include "fixedxor.h"
+#include "bytexor_cipher.h"
 #include "log.h"
 #define MAX_ARG_LEN 20
 int main(int argc, char *argv[]) {
@@ -12,6 +13,8 @@ int main(int argc, char *argv[]) {
         return hex2base64_start(argc, argv);
     } else if (strncmp("fixedxor", argv[1], MAX_ARG_LEN) == 0) {
         return fixedxor_start(argc, argv);
+    } else if (strncmp("bytexor_ciper", argv[1], MAX_ARG_LEN) == 0) {
+        return bytexor_cipher_start(argc, argv);
     }
     return 1;
 }

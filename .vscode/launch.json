@@ -29,6 +29,18 @@
             "externalConsole": false,
             "MIMode": "lldb"
         }
+        {
+            "name": "bytexor_ciper",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/c/bin/crypto_challenge",
+            "args": ["bytexor_ciper", "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        }
 
     ]
 }
