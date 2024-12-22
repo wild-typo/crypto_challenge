@@ -2,19 +2,42 @@
 #include "hex2base64.h"
 #include "fixedxor.h"
 #include "bytexor_cipher.h"
+#include "detect_bytexor.h"
 #include "log.h"
 #define MAX_ARG_LEN 20
+
+typedef struct _CHALLENGE {
+    char *name;
+    int (*start_func)(int, char *[]);
+} CHALLENGE;
+
+CHALLENGE challenges[] = {  {.name = "hex2base64",      .start_func = hex2base64_start},
+                            {.name = "fixedxor",        .start_func = fixedxor_start},
+                            {.name = "bytexor_ciper",   .start_func = bytexor_cipher_start},
+                            {.name = "detect_bytexor",  .start_func = detect_bytexor_start}
+};
+
+size_t challenge_len = sizeof(challenges) / sizeof(CHALLENGE);
+
+void print_help() {
+    printf("usage: crypto_challenge CHALLENGE [args...]\n");
+    printf("supported CHALLENGE:");
+    for (int i = 0; i < challenge_len; i++) {
+        printf(" %s", challenges[i].name);
+    }
+    printf("\n");
+}
+
 int main(int argc, char *argv[]) {
     if (argc < 2) {
-        err_log("Invalid argument number: %d\n", argc);
+        print_help();
         return 0;
     }
-    if (strncmp("hex2base64", argv[1], MAX_ARG_LEN) == 0) {
-        return hex2base64_start(argc, argv);
-    } else if (strncmp("fixedxor", argv[1], MAX_ARG_LEN) == 0) {
-        return fixedxor_start(argc, argv);
-    } else if (strncmp("bytexor_ciper", argv[1], MAX_ARG_LEN) == 0) {
-        return bytexor_cipher_start(argc, argv);
+    for (int i = 0; i < challenge_len; i++) {
+        if (strncmp(challenges[i].name, argv[1], MAX_ARG_LEN) == 0) {
+            return challenges[i].start_func(argc, argv);
+        }
     }
+    print_help();
     return 1;
 }

@@ -60,3 +60,4 @@ int hexstr_decode(const uint8_t *bytes, size_t byteslen, char *hexstr, size_t he
     }
     return 1;
 }
+

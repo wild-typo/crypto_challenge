@@ -7,20 +7,23 @@
 #include "hexstr.h"
 #include "hexprint.h"
 #include "ascii_freq.h"
-#define ASCII_COUNT 128
 
+#define BYTE_MAX 256
 double freq_score(const uint8_t *bytes, const size_t bytes_len) {
     size_t i = 0;
     double score = 0.0;
-    double tmp[ASCII_COUNT] = {0.0};
+    double tmp[BYTE_MAX] = {0.0};
     for (i = 0; i < bytes_len; i++) {
         tmp[bytes[i]] += 1.0; 
     }
-    for (i = 0; i < ASCII_COUNT; i++) {
+    for (i = 0; i < BYTE_MAX; i++) {
         tmp[i] /= bytes_len; 
     }
     for (i = 0; i < ASCII_COUNT; i++) {
         score += pow((tmp[i] - ascii_freq[i]), 2);
+    }
+    for (i = ASCII_COUNT; i < BYTE_MAX; i++) {
+        score += tmp[i] * tmp[i];
     }
     return score;
 }
@@ -32,7 +35,7 @@ void bytexor(const uint8_t *in_bytes, uint8_t *out_bytes, const uint8_t xor_byte
     }
 }
 
-uint8_t bytexor_cipher(const uint8_t *bytes, const size_t bytes_len) {
+uint8_t bytexor_cipher(const uint8_t *bytes, const size_t bytes_len, double *best_score_p) {
     uint8_t b = 0, best_b = 0;
     uint8_t *tmp_bytes = (uint8_t *)malloc(bytes_len);
     double score = 100.0, best_score = 100.0;
@@ -48,6 +51,7 @@ uint8_t bytexor_cipher(const uint8_t *bytes, const size_t bytes_len) {
         }
     }
     free(tmp_bytes);
+    *best_score_p = best_score;
     return best_b;
 }
 
@@ -55,6 +59,7 @@ int bytexor_cipher_start(int argc, char *argv[]) {
     size_t str_len = 0, bytes_len = 0, i = 0, best_match_chars_len = 0;
     uint8_t *bytes = NULL, *best_match_bytes = NULL, best_xor;
     char *best_match_chars = NULL;
+    double best_score;
     for (i = 0; i < 128; i++) {
         printf("%zu: %lf\n", i, ascii_freq[i]);
     }
@@ -67,12 +72,12 @@ int bytexor_cipher_start(int argc, char *argv[]) {
     bytes = (uint8_t *)malloc(bytes_len);
     hexstr_encode(argv[2], str_len, bytes, bytes_len);
     hexprint(bytes, bytes_len);
-    best_xor = bytexor_cipher(bytes, bytes_len);
+    best_xor = bytexor_cipher(bytes, bytes_len, &best_score);
 
     best_match_bytes = (uint8_t *)malloc(bytes_len);
     memset(best_match_bytes, 0, bytes_len);
     bytexor(bytes, best_match_bytes, best_xor, bytes_len);
-    printf("xor: %d, best match string: %s\n", best_xor, best_match_bytes);
+    printf("xor: %d, best match string: %s, score:%f\n", best_xor, best_match_bytes, best_score);
 
 exit:
     if (best_match_bytes != NULL) {
@@ -81,5 +86,5 @@ exit:
     if (bytes != NULL) {
         free(bytes);
     }
-    return 0;
+    return 1;
 }
