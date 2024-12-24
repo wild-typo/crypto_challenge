@@ -42,7 +42,7 @@ int hexstr_encode(const char *hexstr, size_t hexstrlen, uint8_t *bytes, size_t b
 }
 
 size_t hexstr_decode_len(size_t byteslen) {
-    return byteslen >> 1;
+    return byteslen << 1;
 }
 
 int hexstr_decode(const uint8_t *bytes, size_t byteslen, char *hexstr, size_t hexstrlen) {

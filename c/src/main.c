@@ -3,6 +3,7 @@
 #include "fixedxor.h"
 #include "bytexor_cipher.h"
 #include "detect_bytexor.h"
+#include "repeatingkey_xor_cipher.h"
 #include "log.h"
 #define MAX_ARG_LEN 20
 
@@ -11,10 +12,11 @@ typedef struct _CHALLENGE {
     int (*start_func)(int, char *[]);
 } CHALLENGE;
 
-CHALLENGE challenges[] = {  {.name = "hex2base64",      .start_func = hex2base64_start},
-                            {.name = "fixedxor",        .start_func = fixedxor_start},
-                            {.name = "bytexor_ciper",   .start_func = bytexor_cipher_start},
-                            {.name = "detect_bytexor",  .start_func = detect_bytexor_start}
+CHALLENGE challenges[] = {  {.name = "hex2base64",              .start_func = hex2base64_start},
+                            {.name = "fixedxor",                .start_func = fixedxor_start},
+                            {.name = "bytexor_cipher",          .start_func = bytexor_cipher_start},
+                            {.name = "detect_bytexor",          .start_func = detect_bytexor_start},
+                            {.name = "repeatingkey_xor_cipher", .start_func = repeatingkey_xor_cipher_start}
 };
 
 size_t challenge_len = sizeof(challenges) / sizeof(CHALLENGE);

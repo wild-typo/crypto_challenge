@@ -15,8 +15,9 @@
             "cwd": "${fileDirname}",
             "environment": [],
             "externalConsole": false,
-            "MIMode": "lldb"
-        }
+            "MIMode": "lldb",
+            "targetArchitecture": "arm64"
+        },
         {
             "name": "fixedxor",
             "type": "cppdbg",
@@ -27,8 +28,9 @@
             "cwd": "${fileDirname}",
             "environment": [],
             "externalConsole": false,
-            "MIMode": "lldb"
-        }
+            "MIMode": "lldb",
+            "targetArchitecture": "arm64"
+        },
         {
             "name": "bytexor_ciper",
             "type": "cppdbg",
@@ -39,8 +41,34 @@
             "cwd": "${fileDirname}",
             "environment": [],
             "externalConsole": false,
-            "MIMode": "lldb"
+            "MIMode": "lldb",
+            "targetArchitecture": "arm64"
+        },
+        {
+            "name": "detect_bytexor",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/c/bin/crypto_challenge",
+            "args": ["detect_bytexor"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/c/bin",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "targetArchitecture": "arm64"
+        }, 
+        {
+            "name": "repeatingkey_xor_cipher",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/c/bin/crypto_challenge",
+            "args": ["repeatingkey_xor_cipher", "res/5.txt", "ICE"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/c/bin",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "targetArchitecture": "arm64"
         }
-
     ]
 }

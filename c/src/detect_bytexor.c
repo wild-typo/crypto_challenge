@@ -2,28 +2,12 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include <hexstr.h>
-#include <bytexor_cipher.h>
+#include "hexstr.h"
+#include "file.h"
+#include "bytexor_cipher.h"
 
 const char *enc_file = "res/4.txt";
 const size_t CHAR_COUNT = 60;
-
-size_t get_file_size(FILE *fp) {
-    if (fseek(fp, 0, SEEK_END) == -1) {
-        printf("failed to fseek end\n");
-        return -1;
-    }
-    size_t off = ftell(fp);
-    if (off == -1) {
-        printf("failed to ftell\n");
-        return -1;
-    }
-    if (fseek(fp, 0, SEEK_SET) == -1) {
-        printf("failed to fseek set\n");
-        return -1;
-    }
-    return off;
-}
 
 size_t read_hexstr_from_file(FILE *fp, char *hexstr, size_t sz) {
     char c, *str_p = hexstr;    
